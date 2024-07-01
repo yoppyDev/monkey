@@ -53,8 +53,11 @@ func (p *Parser) ParseProgram() *ast.Program {
 func (p *Parser) parseStatement() ast.Statement {
 	switch p.curToken.Type {
 	case token.LET:
-		// typeがletであればletのノードを構築する
+		// typeが let であればletのノードを構築する
 		return p.parseLetStatement()
+	case token.RETURN:
+		// typeが return であればletのノードを構築する
+		return p.parseReturnStatement()
 	default:
 		return nil
 	}
@@ -74,6 +77,21 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 	if !p.expectPeek(token.ASSIGN) {
 		return nil
 	}
+
+	p.nextToken()
+
+	// TODO: セミコロンに遭遇するまで式を読み飛ばす
+	for !p.curTokenIs(token.SEMICOLON) {
+		p.nextToken()
+	}
+
+	return stmt
+}
+
+func (p *Parser) parseReturnStatement () *ast.ReturnStatement {
+	stmt := &ast.ReturnStatement{Token: p.curToken}
+
+	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
 
 	p.nextToken()
 

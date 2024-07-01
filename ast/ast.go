@@ -41,6 +41,7 @@ func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
 func (i *Identifier) String() string       { return i.Value }
 
 // Statements
+// -----------------------
 // let キーワード
 type LetStatement struct {
 	Token token.Token
@@ -53,3 +54,14 @@ func (ls *LetStatement) TokenLiteral() string {
 	return ls.Token.Literal
 }
 
+// return キーワード
+type ReturnStatement struct {
+	Token token.Token
+	Name *Identifier
+	Value Expression
+}
+
+func (ls *ReturnStatement) statementNode() {}
+func (ls *ReturnStatement) TokenLiteral() string {
+	return ls.Token.Literal
+}

@@ -310,7 +310,6 @@ func (p *Parser) curPrecedence() int {
 	return LOWEST
 }
 
-
 // -----------------------
 // 解析関数
 

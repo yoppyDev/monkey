@@ -46,7 +46,6 @@ func (p *Program) String() string {
 // Expression
 // -----------------------
 
-
 // 識別子
 type Identifier struct {
 	Token token.Token

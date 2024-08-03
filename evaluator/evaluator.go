@@ -38,7 +38,7 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	case *ast.InfixExpression:
 		right := Eval(node.Right, env)
 		left := Eval(node.Left, env)
-		return evalInfixExpression(node.Operator, right, left)
+		return evalInfixExpression(node.Operator, left, right)
 	case *ast.IfExpression:
 		return evalIfExpression(node, env)
 	case *ast.Identifier:

@@ -154,6 +154,8 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 
 	p.nextToken()
 
+	stmt.ReturnValue = p.parseExpression(LOWEST)
+
 	// TODO: セミコロンに遭遇するまで式を読み飛ばす
 	for !p.curTokenIs(token.SEMICOLON) {
 		p.nextToken()
@@ -307,7 +309,6 @@ func (p *Parser) curPrecedence() int {
 
 	return LOWEST
 }
-
 
 // -----------------------
 // 解析関数

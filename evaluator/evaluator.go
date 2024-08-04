@@ -34,11 +34,20 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	// Expressions
 	case *ast.PrefixExpression:
 		right := Eval(node.Right, env)
+		if isError(right) {
+			return right
+		}
 		return evalPrefixExpression(node.Operator, right)
 	case *ast.InfixExpression:
 		right := Eval(node.Right, env)
+		if isError(right) {
+			return right
+		}
 		left := Eval(node.Left, env)
-		return evalInfixExpression(node.Operator, left, right)
+		if isError(left) {
+			return left
+		}
+		return evalInfixExpression(node.Operator, right, left)
 	case *ast.IfExpression:
 		return evalIfExpression(node, env)
 	case *ast.Identifier:
